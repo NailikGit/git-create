@@ -1,0 +1,19 @@
+#! /bin/zsh
+
+print_usage () {
+  echo "usage: ./git-create-remote -n name"
+}
+
+while getopts 'n:' flag; do
+  case "${flag}" in
+    n) name=$OPTARG;;
+    *) print_usage
+       exit 1 ;;
+  esac
+done
+
+if [ ! -f "~/repos/${name}.git" ]; then
+  mkdir ~/repos/${name}.git
+  cd ~/repos/${name}.git
+  git init --bare
+fi

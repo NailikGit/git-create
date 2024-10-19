@@ -1,0 +1,27 @@
+#! /bin/zsh
+
+print_usage () {
+  echo "usage: ./git-create -s server_name -u user_name -n repo_name"
+}
+
+while getopts 's:u:n:' flag; do
+	case "${flag}" in
+	  s) server=$OPTARG ;;
+	  u) user=$OPTARG ;;
+	  n) name=$OPTARG ;;
+	  *) print_usage
+	     exit 1;;
+	esac
+done
+
+stty -echo
+printf "$user@$server's password: "
+read pass
+stty echo
+printf "\n"
+
+remote="${user}@${server}"
+
+sshpass -p $pass ssh $remote "./git-create-remote -n $name"
+
+sshpass -p $pass git clone $remote":repos/$name.git"
