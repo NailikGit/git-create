@@ -12,7 +12,7 @@ while getopts 'n:' flag; do
   esac
 done
 
-if [ ! -f "~/repos/${name}.git" ]; then
+if [ ! -d "~/repos/${name}.git" ]; then
   mkdir ~/repos/${name}.git
   cd ~/repos/${name}.git
   git init --bare
