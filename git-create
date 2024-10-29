@@ -14,14 +14,8 @@ while getopts 's:u:n:' flag; do
 	esac
 done
 
-stty -echo
-printf "$user@$server's password: "
-read pass
-stty echo
-printf "\n"
-
 remote="${user}@${server}"
 
-sshpass -p $pass ssh $remote "./git-create-remote -n $name"
+ssh $remote "./git-create-remote -n $name"
 
-sshpass -p $pass git clone $remote":repos/$name.git"
+git clone $remote":repos/$name.git"
